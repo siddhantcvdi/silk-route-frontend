@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@font-face {
+    font-family: hindifont;
+    src: url(../src/Fonts/Ananda\ Namaste\ Regular.ttf);
+}
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+.login-page{
+    width: 100vw;
+    position: relative;
+    height: 100vh;
+    background-image: url(../src/paper-bg.jpeg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.login-card{
+    width: 400px;
+    height: 600px;
+    background-color: rgba(255, 255, 255);
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px 0px rgba(60, 60, 60, 0.281);
+    color: #410c02;
+    font-family: 'Poppins';
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 20px;
+    z-index: 1;
+}
+.circle{
+    width: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    filter: opacity(0.2);
+    & img{
+        width: 100%;
+    }
+    filter: opacity(0.3);
+}
+.heading{
+    font-family: 'hindifont';
+    font-size: 65px;
+    font-weight: 500;
+
+}
+.input-field{
+    width: 80%;
+    height: 45px;
+    border-radius: 15px;
+    border: none;
+    padding: 15px;
+    font-size: 16px;
+    margin: 20px;
+    background-color: #f2f2f2;
+}
+.input-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+.login-card button{
+    width: 60%;
+    height: 45px;
+    border-radius: 15px;
+    border: none;
+    background-color: #fa6b14;
+    color: white;
+    font-family: 'poppins';
+    font-size: 16px;    
+    cursor: pointer;
+}
+.new-acc{
+    cursor: pointer;
+}
+.back-login{
+    cursor: pointer;
+}
