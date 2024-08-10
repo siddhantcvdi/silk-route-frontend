@@ -21,3 +21,4 @@ document.addEventListener('click',(e)=>{
         newAcc.classList.add('new-acc')
     }
 })
+console.log('Hi');
