@@ -1,27 +1,13 @@
-"use strict"
+"use strict";
+let description_text;
+let reviews;
+const modal_blur = document.querySelector(".modal-blur");
+const modal = document.querySelector(".modal");
 
-// const modal_blur = document.querySelector('.modal-blur');
-// const modal = document.querySelector('.modal')
-// const product_cards = document.querySelectorAll('.product-card');
-
-// product_cards.forEach((product_card) => {
-//     product_card.addEventListener('click', () => {
-//         modal_blur.classList.remove('hide');
-//     })
-// })
-
-// document.querySelector('.product-button').addEventListener('click', (e) => {
-//     e.stopPropagation();
-//     console.log('Button');
-
-// })
-
-
-// document.addEventListener('click', (e) => {
-//     if (e.target.classList.contains('modal-blur'))
-//         modal_blur.classList.add('hide')
-// })
-
+document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("modal-blur"))
+        modal_blur.classList.add("hide");
+});
 
 const createCards = function (data) {
     for (let element of data) {
@@ -42,26 +28,33 @@ const createCards = function (data) {
                         <button class="product-button">Add to Bag</button>
                     </div>
                 </div>
-            </div>
-`   
-    document.querySelector('.products-grid').insertAdjacentHTML('afterbegin', card);
-    // console.log(card);
+            </div>`;
+        document
+            .querySelector(".products-grid")
+            .insertAdjacentHTML("afterbegin", card);
     }
-}
-
+    const product_cards = document.querySelectorAll(".product-card");
+    product_cards.forEach((product_card) => {
+        product_card.addEventListener("click", () => {
+            modal_blur.classList.remove("hide");
+        });
+    });
+    document.querySelector('.product-button').addEventListener('click', (e) => {
+        e.stopPropagation();
+        console.log('Button');
+    })
+};
 
 async function getProducts(state_name) {
-    const response = await fetch('http://localhost:5000/products', {
-        method: 'POST',
+    const response = await fetch("http://localhost:5000/products", {
+        method: "POST",
         headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            state: state_name
-        })
-    })
-    // const data = await response.json();
+            state: state_name,
+        }),
+    });
     createCards(await response.json());
 }
-
-getProducts('Maharashtra');
+getProducts("Maharashtra");
