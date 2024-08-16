@@ -31,8 +31,6 @@ fetch('http://localhost:3000/api/auth/isloggedin', {
                 btn.textContent = 'Login';
                 document.querySelector('.name-field').remove();
             }
-            console.log(currentMode);
-            
         })
     }
 });
@@ -58,7 +56,7 @@ btn.addEventListener('click', () => {
                 alert('Registration successful');
                 btn.textContent = 'Logged In';
                 btn.disabled = true;
-                window.location.href = '../Products/index.html';
+                window.location.href = '../Login/index.html';
             } else {
                 alert('Registration failed: ' + data.error);
             }
@@ -67,7 +65,6 @@ btn.addEventListener('click', () => {
     else{
         const email = document.getElementById('email').value;
         const password = document.getElementById('pass').value;
-
         fetch('http://localhost:3000/api/auth/login', {
             method: 'POST',
             headers: {
@@ -82,11 +79,12 @@ btn.addEventListener('click', () => {
                 alert('Login successful');
                 btn.textContent = 'Logged In';
                 btn.disabled = true;
-                window.location.href = '../Products/index.html';
+            window.location.href = '../Login/index.html';
             } else {
                 alert('Login failed: ' + data.error);
             }
         });
     }
 });
+document.getElementById('store').addEventListener('click', () => {window.location.href = '../Products/index.html';});
 
