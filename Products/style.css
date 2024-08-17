@@ -174,9 +174,10 @@ body{
 .product-button{
     width: 60%;
     height: 45px;
-    background-color: #232323;
+    background-color: #3a3a3a;
     border-radius: 15px;
     color: white;
+    font-size: 14px;
     border: none;
     cursor: pointer;
 }

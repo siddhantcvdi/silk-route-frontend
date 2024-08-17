@@ -1,44 +1,61 @@
 "use strict"
 let state = 'all';
-const modal_blur = document.querySelector('.modal-blur');
-const modal = document.querySelector('.modal')
+import { showModal } from '../modal.js';
 const cartButton = document.querySelector('.bag-modal');
-document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('modal-blur'))
-        modal_blur.classList.add('hide')
-})
 
-cartButton?.addEventListener('click', (e) => {
-    // fetch('http://localhost:3000/api/auth/me', {
-    //     method: 'GET',
-    //     headers: {
-    //         'Authorization': `Bearer ${localStorage.getItem('token')}`
-    //     }
-    // })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         if (data.error) {
-    //             alert('Failed to fetch user details: ' + data.error);
-    //         } else {
-                
-    //         }
-    //     })
-    fetch('http://localhost:3000/api/auth/isloggedin', {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.loggedIn) {
-            
+
+
+
+
+
+/////////////////////////// Code to add items to cart of the userrrrr //////////////////////////////
+
+
+const addToCart = async (productID) => {
+    try {
+        const response = await fetch('http://localhost:3000/api/auth/add-to-cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({ productID })
+        });
+        const data = await response.json();
+        if (response.ok) {
+            alert('Item added to cart successfully')
+            console.log('Updated cart:', data.cart);
         } else {
-            alert('Please login to add items to cart');
+            if (response.status === 401 || response.status === 403) {
+                alert('Session expired or invalid. Please log in again.');
+                window.location.href = '../Login/index.html';
+            } else {
+                console.error('Error:', data.error || 'Failed to add item to cart.');
+            }
+        }
+    } catch (error) {
+        console.error('Error adding item to cart:', error);
+        alert('An error occurred. Please try again.');
+    }
+};
+
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('bag-modal')) {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('You need to log in first!');
             window.location.href = '../Login/index.html';
         }
-    });
+        else
+            addToCart(e.target.id);
+    }
 });
+
+
+
+
+
+///////////////////////////  Code to render products according to the state selected     ///////////////////////////////
 
 const renderProducts = function (data) {
     for (let element of data) {
@@ -53,8 +70,8 @@ const renderProducts = function (data) {
                     
                     <div class="button-container">
                         <div class="product-price">
-                            <div class="final-price">₹${element.price}</div>
-                            <div class="initial-price">₹1200</div>
+                            <div class="final-price">₹${Math.trunc(element.price - ((element.disc / 100) * element.price))}</div>
+                            <div class="initial-price">₹${element.price}</div>
                         </div>
                         <button class="product-button" id = "${element._id}" >View More</button>
                     </div>
@@ -67,22 +84,27 @@ const renderProducts = function (data) {
 
 };
 
-const fetchProducts  = async function (state) {
+const fetchProducts = async function (state) {
     fetch(`http://localhost:3000/api/products/state/${state}`)
-    .then(response => response.json())
-    .then(products => {
-        console.log('Products in state:', state);
-        renderProducts(products);
-    })
-    .catch(error => console.error('Error fetching products by state:', error));
+        .then(response => response.json())
+        .then(products => {
+            console.log('Products in state:', state);
+            renderProducts(products);
+        })
+        .catch(error => console.error('Error fetching products by state:', error));
 }
 
 document.addEventListener('click', (e) => {
-    if(e.target.classList.contains('product-button')) {
+    if (e.target.classList.contains('product-button')) {
         e.stopPropagation();
-        modal_blur.classList.remove('hide');
+        // modal_blur.classList.remove('hide');
+        showModal(e.target.id);
     }
 });
 
 fetchProducts('all');
 
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal-blur'))
+        e.target.remove()
+})
